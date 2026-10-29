@@ -1,84 +1,84 @@
-# PSPULSE // PS4 HOSTS
+# PSPULSE // HOSTS PARA PS4
 
 <p align="center">
-  <strong>Offline-first PS4 host hub with firmware-specific exploit flows and GoldHEN integration.</strong>
+  <strong>Centro de hosts para PS4 sin conexión priorizada con flujos de exploit específicos por firmware e integración de GoldHEN.</strong>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/platform-PlayStation%204-151515?style=for-the-badge&logo=playstation&logoColor=a294ff" alt="Platform: PlayStation 4">
-  <img src="https://img.shields.io/badge/firmware-5.05--13.00-151515?style=for-the-badge&color=a294ff" alt="Firmware range: 5.05 to 13.00">
-  <img src="https://img.shields.io/badge/mode-offline--first-151515?style=for-the-badge&color=242424" alt="Offline-first">
-  <img src="https://img.shields.io/badge/UI-terminal-151515?style=for-the-badge&color=a294ff" alt="Terminal-style interface">
+  <img src="https://img.shields.io/badge/platform-PlayStation%204-151515?style=for-the-badge&logo=playstation&logoColor=a294ff" alt="Plataforma: PlayStation 4">
+  <img src="https://img.shields.io/badge/firmware-5.05--13.00-151515?style=for-the-badge&color=a294ff" alt="Rango de firmware: 5.05 a 13.00">
+  <img src="https://img.shields.io/badge/mode-offline--first-151515?style=for-the-badge&color=242424" alt="Sin conexión priorizada">
+  <img src="https://img.shields.io/badge/UI-terminal-151515?style=for-the-badge&color=a294ff" alt="Interfaz estilo terminal">
 </p>
 
-![PlayStation Pulse Host Selector](https://raw.githubusercontent.com/sudoBlackArch/sudoblackarch.github.io/refs/heads/main/assets/showcase.webp)
+![Selector de Host de PlayStation Pulse](./fotito.png)
 
 ```text
 $ ./launch --pspulse
 
-[ ok ] 7 host routes detected
-[ ok ] goldhen v2.4b18.12 / v2.4b18.10 staged
-[ ok ] offline cache ready
-[ ok ] gamepad navigation enabled
+[ ok ] 7 rutas de host detectadas
+[ ok ] goldhen v2.4b18.12 / v2.4b18.10 preparado
+[ ok ] caché sin conexión lista
+[ ok ] navegación con mando habilitada
 ```
 
-PlayStation Pulse is a self-contained collection of static PS4 host pages. One entry point, one firmware choice, then the matching exploit and GoldHEN flow — designed for local hosting, offline caching, and the PS4 browser.
+PlayStation Pulse es una colección autónoma de páginas estáticas de host para PS4. Un punto de entrada, una elección de firmware, luego el exploit correspondiente y el flujo de GoldHEN — diseñado para alojamiento local, almacenamiento en caché sin conexión y el navegador de PS4.
 
 > [!NOTE]
-> This project is intended for educational, preservation, and research purposes. Use it at your own risk. It is not affiliated with or endorsed by Sony Interactive Entertainment.
+> Este proyecto está destinado a fines educativos, de preservación e investigación. Su uso corre por su propia cuenta y riesgo. No está afiliado ni respaldado por Sony Interactive Entertainment.
 
 <details>
-<summary><b>$ cat contents</b></summary>
+<summary><b>$ cat contenidos</b></summary>
 
-- [What this project provides](#what-this-project-provides)
-- [Supported firmware flows](#supported-firmware-flows)
-- [How the host works](#how-the-host-works)
-- [GoldHEN versions](#goldhen-versions)
-- [Payload tools](#payload-tools)
-- [Offline caching](#offline-caching)
-- [Using the host](#using-the-host)
-- [Design system](#design-system)
-- [Technical design](#technical-design)
-- [Troubleshooting](#troubleshooting)
-- [Safety and limitations](#safety-and-limitations)
-- [Credits and attribution](#credits-and-attribution)
+- [Qué proporciona este proyecto](#qué-proporciona-este-proyecto)
+- [Flujos de firmware compatibles](#flujos-de-firmware-compatibles)
+- [Cómo funciona el host](#cómo-funciona-el-host)
+- [Versiones de GoldHEN](#versiones-de-goldhen)
+- [Herramientas de payload](#herramientas-de-payload)
+- [Almacenamiento en caché sin conexión](#almacenamiento-en-caché-sin-conexión)
+- [Uso del host](#uso-del-host)
+- [Sistema de diseño](#sistema-de-diseño)
+- [Diseño técnico](#diseño-técnico)
+- [Resolución de problemas](#resolución-de-problemas)
+- [Seguridad y limitaciones](#seguridad-y-limitaciones)
+- [Créditos y atribución](#créditos-y-atribución)
 
 </details>
 
-## What this project provides
+## Qué proporciona este proyecto
 
-- A unified terminal-style firmware router at [`index.html`](./index.html).
-- Dedicated offline host pages for PS4 firmware 5.05 and 6.72.
-- PSFree/Lapse host flows for firmware 7.00–8.52 and 9.00–9.60.
-- A CSSFontFace UAF host flow for firmware 6.00–11.02.
-- A SlopKit WebKit research flow for firmware 11.00–12.02 and 12.50–13.00.
-- Repository-bundled GoldHEN v2.4b18.12 and v2.4b18.10 assets where the host supports both builds.
-- AppCache-based offline operation with firmware-specific cache and manifest files.
-- Firmware-specific payload utilities on the host branches that provide them.
-- A single visual system — dark terminal aesthetic, violet accent, controller-friendly focus — across every selector, cache page, and exploit page.
+- Un enrutador de firmware unificado estilo terminal en [`index.html`](./index.html).
+- Páginas de host sin conexión dedicadas para los firmwares 5.05 y 6.72 de PS4.
+- Flujos de host PSFree/Lapse para los firmwares 7.00–8.52 y 9.00–9.60.
+- Un flujo de host CSSFontFace UAF para los firmwares 6.00–11.02.
+- Un flujo de investigación SlopKit WebKit para los firmwares 11.00–12.02 y 12.50–13.00.
+- Recursos de GoldHEN v2.4b18.12 y v2.4b18.10 incluidos en el repositorio donde el host admite ambas compilaciones.
+- Operación sin conexión basada en AppCache con archivos de caché y manifiesto específicos por firmware.
+- Utilidades de payload específicas por firmware en las ramas del host que las proporcionan.
+- Un único sistema visual — estética de terminal oscuro, acento violeta, enfoque adaptado al controlador — en cada selector, página de caché y página de exploit.
 
-## Supported firmware flows
+## Flujos de firmware compatibles
 
-| # | Firmware | Entry point | Exploit flow | GoldHEN | Utility payloads |
+| # | Firmware | Punto de entrada | Flujo de exploit | GoldHEN | Payloads de utilidad |
 |---|---|---|---|---|---|
-| 01 | **13.02–13.52** | `1352/index.html` | SlopKit WebKit (GoldHEN) | `v2.4b18.12` | Upstream payload only |
-| 02 | **11.00–12.02 / 12.50–13.00** | `1300/index.html` | SlopKit WebKit (Lapse / Poops) | `v2.4b18.12` | Upstream payload only |
-| 03 | **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/NetCtrl | `stable` or `latest` | No separate menu |
-| 04 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse | Version selector | Included |
-| 05 | **7.00–8.52** | `700/version-selector.html` | PSFree + Lapse | Version selector | Included |
-| 06 | **6.72** | `672/index.html` | Dedicated host | Directly on page | Included |
-| 07 | **5.05** | `505/index.html` | Dedicated host | Directly on page | Included |
+| 01 | **13.02–13.52** | `1352/index.html` | SlopKit WebKit (GoldHEN) | `v2.4b18.12` | Solo payload original |
+| 02 | **11.00–12.02 / 12.50–13.00** | `1300/index.html` | SlopKit WebKit (Lapse / Poops) | `v2.4b18.12` | Solo payload original |
+| 03 | **6.00–11.02** | `css/version-selector.html` | CSSFontFace UAF + Lapse/NetCtrl | `stable` o `latest` | Sin menú separado |
+| 04 | **9.00–9.60** | `900/version-selector.html` | PSFree + Lapse | Selector de versión | Incluidos |
+| 05 | **7.00–8.52** | `700/version-selector.html` | PSFree + Lapse | Selector de versión | Incluidos |
+| 06 | **6.72** | `672/index.html` | Host dedicado | Directamente en la página | Incluidos |
+| 07 | **5.05** | `505/index.html` | Host dedicado | Directamente en la página | Incluidos |
 
-The root selector stores the selected firmware locally and routes to the correct branch. Always use the host intended for the exact firmware installed on the console.
+El selector raíz almacena el firmware seleccionado localmente y enruta a la rama correcta. Utilice siempre el host diseñado para el firmware exacto instalado en la consola.
 
-Already-loaded guards: the 1300 chains check `getuid`/`setuid(0)` after the userland pivot and exit early with `ALREADY JAILBROKEN` instead of re-running the kernel exploit on an active jailbreak; the 700 and 900 PSFree branches poll the GoldHEN status endpoint (`http://127.0.0.1:9090/status`) for 1.5 s and skip the exploit entirely when GoldHEN answers. Re-opening a host after success is therefore safe by design.
+Protecciones de carga previa: las cadenas 1300 verifican `getuid`/`setuid(0)` después del pivote de espacio de usuario y salen temprano con `ALREADY JAILBROKEN` en lugar de volver a ejecutar el exploit del kernel en un jailbreak activo; las ramas PSFree 700 y 900 consultan el endpoint de estado de GoldHEN (`http://127.0.0.1:9090/status`) durante 1.5 s y omiten el exploit por completo cuando GoldHEN responde. Por lo tanto, volver a abrir un host después de un éxito es seguro por diseño.
 
-## How the host works
+## Cómo funciona el host
 
 ```text
 $ ./launch --select-host
 
-  index.html ──► firmware router
+  index.html ──► enrutador de firmware
                      │
       ┌──────────┬──┴─────┬────────┬────────┬────────┬────────┬─────────┐
       ▼          ▼        ▼        ▼        ▼        ▼        ▼         ▼
@@ -86,196 +86,196 @@ $ ./launch --select-host
    -13.52    -13.00    -11.02   -9.60    -8.52    host     host
    selector  selector  selector selector selector
       │          │         │        │        │        │         │
-      │          │      cache install (payload build choice)
+      │          │      instalación de caché (elección de compilación de payload)
       ▼          ▼        ▼        ▼        ▼        ▼         ▼
       └──────────┴────────┴───┬────┴────────┴────────┴─────────┘
                               ▼
-                 exploit chain ──► HEN / GoldHEN + tools
+                 cadena de exploit ──► HEN / GoldHEN + herramientas
 ```
 
-The project is intentionally static. HTML pages provide the interface, JavaScript modules run the firmware-specific exploit chain, binary files provide GoldHEN/kernel-patch/payload assets, and AppCache files keep the selected flow available after the initial cache installation.
+El proyecto es intencionalmente estático. Las páginas HTML proporcionan la interfaz, los módulos de JavaScript ejecutan la cadena de exploit específica del firmware, los archivos binarios proporcionan los recursos de GoldHEN/parche de kernel/payload, y los archivos AppCache mantienen el flujo seleccionado disponible después de la instalación inicial de la caché.
 
-## GoldHEN versions
+## Versiones de GoldHEN
 
-The repository contains two GoldHEN choices where supported:
+El repositorio contiene dos opciones de GoldHEN donde es compatible:
 
-- **GoldHEN v2.4b18.12** — a repository-bundled build exposed by the selectors.
-- **GoldHEN v2.4b18.10** — a repository-bundled previous build.
+- **GoldHEN v2.4b18.12** — una compilación incluida en el repositorio y expuesta por los selectores.
+- **GoldHEN v2.4b18.10** — una compilación anterior incluida en el repositorio.
 
-The 7.00–8.52 and 9.00–9.60 branches select a GoldHEN build through their version selector and cache page. The CSSFontFace branch uses [`css/version-selector.html`](./css/version-selector.html), which routes to:
+Las ramas 7.00–8.52 y 9.00–9.60 seleccionan una compilación de GoldHEN a través de su selector de versión y página de caché. La rama CSSFontFace utiliza [`css/version-selector.html`](./css/version-selector.html), que enruta a:
 
-- [`css/latest/index.html`](./css/latest/index.html) for v2.4b18.12;
-- [`css/stable/index.html`](./css/stable/index.html) for v2.4b18.10.
+- [`css/latest/index.html`](./css/latest/index.html) para v2.4b18.12;
+- [`css/stable/index.html`](./css/stable/index.html) para v2.4b18.10.
 
-## Payload tools
+## Herramientas de payload
 
-Payload availability is firmware-specific.
+La disponibilidad de payloads es específica para cada firmware.
 
-### Hosts with utility payloads
+### Hosts con payloads de utilidad
 
-Depending on the selected branch, the host pages provide tools such as:
+Dependiendo de la rama seleccionada, las páginas del host proporcionan herramientas como:
 
-- FTP Server;
+- Servidor FTP;
 - PS4Debug;
 - App2USB;
-- Backup and Restore;
-- Enable Updates and Disable Updates;
-- AppCache Install;
-- History Blocker;
-- PUP Decrypt;
-- RIF Renamer;
-- PSFree Fix on the PSFree branches;
-- WebRTE on the branches that include it;
-- Kernel Clock on the firmware host that provides it.
+- Copia de Seguridad y Restauración;
+- Habilitar Actualizaciones y Deshabilitar Actualizaciones;
+- Instalación de AppCache;
+- Bloqueador de Historial;
+- Desencriptador PUP;
+- Renombrador RIF;
+- Corrección PSFree en las ramas PSFree;
+- WebRTE en las ramas que lo incluyen;
+- Reloj del Kernel en el host de firmware que lo proporciona.
 
-The exact list differs between 5.05, 6.72, 7.00–8.52, and 9.00–9.60. Payload buttons load the selected binary through the host's existing payload loader and may require a compatible payload receiver on the same network.
+La lista exacta difiere entre 5.05, 6.72, 7.00–8.52 y 9.00–9.60. Los botones de payload cargan el binario seleccionado a través del cargador de payload existente del host y pueden requerir un receptor de payload compatible en la misma red.
 
-### CSSFontFace host scope
+### Alcance del host CSSFontFace
 
-The CSSFontFace branch deliberately excludes the standalone utility-payload menu used by the other host branches. The CSSFontFace exploit flow is memory-intensive by nature, so removing additional payload tools helps preserve the memory headroom needed for a more stable exploit and GoldHEN launch. Its interface is focused on:
+La rama CSSFontFace excluye deliberadamente el menú de payloads de utilidad independiente utilizado por las otras ramas del host. El flujo de exploit CSSFontFace es intensivo en memoria por naturaleza, por lo que eliminar herramientas de payload adicionales ayuda a preservar el margen de memoria necesario para un exploit y lanzamiento de GoldHEN más estables. Su interfaz se centra en:
 
-- exploit output with color-coded log lines (info / error / debug);
-- Lapse or NetCtrl chain selection;
-- Auto Jailbreak countdown, manual `Jailbreak`, and a `Reload` button for recovery after a failed attempt;
-- automatic loading of the selected GoldHEN build.
+- salida del exploit con líneas de registro codificadas por color (información / error / depuración);
+- selección de cadena Lapse o NetCtrl;
+- cuenta regresiva para Jailbreak Automático, `Jailbreak` manual y un botón `Reload` para recuperación tras un intento fallido;
+- carga automática de la compilación de GoldHEN seleccionada.
 
-The CSSFontFace implementation still contains the internal binary stage required to complete its selected exploit/GoldHEN flow. That internal stage is not a user-selectable utility payload and is not equivalent to the optional utility-payload set excluded from this host.
+La implementación de CSSFontFace aún contiene la etapa binaria interna requerida para completar su flujo de exploit/GoldHEN seleccionado. Esa etapa interna no es un payload de utilidad seleccionable por el usuario y no es equivalente al conjunto opcional de payloads de utilidad excluido de este host.
 
-## Offline caching
+## Almacenamiento en caché sin conexión
 
-All host branches use relative assets and browser application caching. Cache files must be served from the paths expected by their entry pages; do not rename or flatten the firmware directories after deployment.
+Todas las ramas del host utilizan recursos relativos y almacenamiento en caché de aplicaciones del navegador. Los archivos de caché deben servirse desde las rutas esperadas por sus páginas de entrada; no cambie el nombre ni aplane los directorios de firmware después de la implementación.
 
-| Branch | Cache flow |
+| Rama | Flujo de caché |
 |---|---|
-| **5.05** | `505/cache.manifest` is attached to the host page and the page reports installation progress. |
-| **6.72** | `672/cache.manifest` is attached to the host page and the page reports installation progress. |
-| **7.00–8.52** | Select a build in `700/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.cache` or `PSPulse5.cache`. |
-| **9.00–9.60** | Select a build in `900/version-selector.html`, then use `cache.html` or `cache5.html` to install `PSPulse.manifest` or `PSPulse5.manifest`. |
-| **CSSFontFace** | Select a build in `css/version-selector.html`; the chosen `stable` or `latest` page uses its own `cache.manifest` with per-file SHA-256 hashes. |
-| **1300** | Open `1300/index.html`; the current build is stored directly in `1300/` and installs its own `cache.manifest` automatically. |
-| **1352** | Open `1352/index.html` (GoldHEN `v2.4b18.12` for 13.02–13.52); the page installs its own `cache.manifest` automatically, cache updates require a tap to reload. |
+| **5.05** | `505/cache.manifest` se adjunta a la página del host y la página informa el progreso de la instalación. |
+| **6.72** | `672/cache.manifest` se adjunta a la página del host y la página informa el progreso de la instalación. |
+| **7.00–8.52** | Seleccione una compilación en `700/version-selector.html`, luego use `cache.html` o `cache5.html` para instalar `PSPulse.cache` o `PSPulse5.cache`. |
+| **9.00–9.60** | Seleccione una compilación en `900/version-selector.html`, luego use `cache.html` o `cache5.html` para instalar `PSPulse.manifest` o `PSPulse5.manifest`. |
+| **CSSFontFace** | Seleccione una compilación en `css/version-selector.html`; la página `stable` o `latest` elegida usa su propio `cache.manifest` con hashes SHA-256 por archivo. |
+| **1300** | Abra `1300/index.html`; la compilación actual se almacena directamente en `1300/` e instala su propio `cache.manifest` automáticamente. |
+| **1352** | Abra `1352/index.html` (GoldHEN `v2.4b18.12` para 13.02–13.52); la página instala su propio `cache.manifest` automáticamente, las actualizaciones de caché requieren un toque para recargar. |
 
-After the first successful cache installation, close and reopen the PS4 browser when the page instructs you to do so. If a page still serves an older layout or script, clear the host's browser data and repeat the cache installation.
+Después de la primera instalación exitosa de la caché, cierre y vuelva a abrir el navegador de PS4 cuando la página se lo indique. Si una página aún sirve un diseño o script antiguo, borre los datos del navegador del host y repita la instalación de la caché.
 
-The repository also includes small generator scripts for rebuilding cache files after asset changes. Whenever a cached file changes, regenerate the corresponding manifest/cache and verify that every referenced relative path is available from the deployed host.
+El repositorio también incluye pequeños scripts generadores para reconstruir archivos de caché después de cambios en los recursos. Cada vez que cambie un archivo en caché, regenere el manifiesto/caché correspondiente y verifique que cada ruta relativa referenciada esté disponible desde el host implementado.
 
-## Using the host
+## Uso del host
 
-1. Serve the repository root through an HTTP or HTTPS static server. The PS4 browser should not be expected to run the complete flow from an unsupported `file://` URL.
-2. Open the root [`index.html`](./index.html) in the PS4 browser.
-3. Select the exact firmware range matching the console.
-4. If the selected branch has a GoldHEN version selector, choose **Latest** or **Stable** and wait for the cache page to finish.
-5. On the host page, wait for the ready/status message before starting the exploit.
-6. After GoldHEN has loaded, use only the tools shown by that host branch.
+1. Sirva la raíz del repositorio a través de un servidor estático HTTP o HTTPS. No se debe esperar que el navegador de PS4 ejecute el flujo completo desde una URL `file://` no soportada.
+2. Abra el [`index.html`](./index.html) raíz en el navegador de PS4.
+3. Seleccione el rango de firmware exacto que coincida con la consola.
+4. Si la rama seleccionada tiene un selector de versión de GoldHEN, elija **Latest** (Más reciente) o **Stable** (Estable) y espere a que termine la página de caché.
+5. En la página del host, espere el mensaje de listo/estado antes de iniciar el exploit.
+6. Después de que GoldHEN haya cargado, use solo las herramientas mostradas por esa rama del host.
 
-For the CSSFontFace host, **Auto Jailbreak** is enabled by default. After the page loads it starts a five-second countdown and then runs the chain automatically, or press `Jailbreak` manually at any time. During the countdown you can still select `Lapse`/`NetCtrl` or switch Auto Jailbreak off (the choice persists in `localStorage`). On the very first visit the countdown waits until the AppCache install settles — the heavy exploit chain never runs on top of an unfinished cache download. A newly installed cache reloads the page once, then the countdown restarts; an update discovered in the background is applied on the next launch. When the browser is offline, a failed manifest refresh is treated as non-fatal as long as the installed cache is still valid, so the cached host still auto-starts.
+Para el host CSSFontFace, **Jailbreak Automático** está habilitado por defecto. Después de que la página carga, inicia una cuenta regresiva de cinco segundos y luego ejecuta la cadena automáticamente, o presione `Jailbreak` manualmente en cualquier momento. Durante la cuenta regresiva aún puede seleccionar `Lapse`/`NetCtrl` o desactivar el Jailbreak Automático (la elección persiste en `localStorage`). En la primera visita, la cuenta regresiva espera hasta que la instalación de AppCache se asiente — la cadena de exploit pesada nunca se ejecuta sobre una descarga de caché incompleta. Una caché recién instalada recarga la página una vez, luego la cuenta regresiva se reinicia; una actualización descubierta en segundo plano se aplica en el siguiente inicio. Cuando el navegador está sin conexión, una falla en la actualización del manifiesto se trata como no fatal siempre que la caché instalada siga siendo válida, por lo que el host en caché aún se inicia automáticamente.
 
-The CSSFontFace page stores the selected chain in `localStorage` under `exploitChain` and the Auto Jailbreak preference under `autoJb`. The root selector and GoldHEN selectors also keep their selected values locally so the browser can preserve the last choice between page loads.
+La página CSSFontFace almacena la cadena seleccionada en `localStorage` bajo `exploitChain` y la preferencia de Jailbreak Automático bajo `autoJb`. El selector raíz y los selectores de GoldHEN también mantienen sus valores seleccionados localmente para que el navegador pueda preservar la última elección entre cargas de página.
 
-## Design system
+## Sistema de diseño
 
-Every page — root selector, version selectors, cache installers, and exploit hosts — shares one visual language built for a TV viewed from a couch and an old WebKit engine:
+Cada página — selector raíz, selectores de versión, instaladores de caché y hosts de exploit — comparte un lenguaje visual construido para un televisor visto desde un sofá y un motor WebKit antiguo:
 
-- **Palette** — near-black background `#151515`, panels `#1c1c1c`/`#242424`, single violet accent `#a294ff`, error `#ff9b9b`, warning `#e1bd72`.
-- **Terminal aesthetic** — monospace type, `$ ./launch` kickers, `[ ok ]` boot lines, `//` separators, numbered routes.
-- **Readable at distance** — large route titles (19–24 px), oversized page headings, nothing below 12 px.
-- **Controller-first** — every interactive element is a real focusable element with a double focus ring (`2px bg + 4px accent`); arrow-key navigation with legacy `keyCode` fallbacks for older PS4 WebKit builds.
-- **Zero overhead** — no frameworks, no external fonts or images, no transitions, no keyframes, no `backdrop-filter`; only static HTML, inline CSS, and small ES5 scripts.
-- **Log legibility** — color-coded exploit output on the CSSFontFace host: info in accent, errors in red, debug dimmed.
+- **Paleta** — fondo casi negro `#151515`, paneles `#1c1c1c`/`#242424`, un solo acento violeta `#a294ff`, error `#ff9b9b`, advertencia `#e1bd72`.
+- **Estética de terminal** — tipografía monoespaciada, iniciadores `$ ./launch`, líneas de arranque `[ ok ]`, separadores `//`, rutas numeradas.
+- **Legible a distancia** — títulos de ruta grandes (19–24 px), encabezados de página sobredimensionados, nada por debajo de 12 px.
+- **Prioridad al controlador** — cada elemento interactivo es un elemento enfocable real con un doble anillo de enfoque (`2px fondo + 4px acento`); navegación con teclas de flecha con alternativas legacy `keyCode` para compilaciones antiguas de PS4 WebKit.
+- **Cero sobrecarga** — sin frameworks, sin fuentes o imágenes externas, sin transiciones, sin keyframes, sin `backdrop-filter`; solo HTML estático, CSS en línea y pequeños scripts ES5.
+- **Legibilidad del registro** — salida de exploit codificada por color en el host CSSFontFace: información en acento, errores en rojo, depuración atenuada.
 
-## Technical design
+## Diseño técnico
 
-### Root selector
+### Selector raíz
 
-The root page is a terminal-style host router rather than a dropdown. It supports pointer interaction and keyboard/gamepad navigation, stores `selectedFirmware`, and routes to the matching host branch.
+La página raíz es un enrutador de host estilo terminal en lugar de un menú desplegable. Admite interacción con puntero y navegación por teclado/controlador, almacena `selectedFirmware` y enruta a la rama de host correspondiente.
 
-### AppCache maintenance
+### Mantenimiento de AppCache
 
-AppCache is legacy browser technology, but it is part of the host's offline delivery model. Treat cache files as generated artifacts: after changing an HTML, JavaScript, binary, or patch asset, update the matching cache list/hash and test the first-load and cached-load paths separately.
+AppCache es una tecnología de navegador obsoleta, pero es parte del modelo de entrega sin conexión del host. Trate los archivos de caché como artefactos generados: después de cambiar un recurso HTML, JavaScript, binario o parche, actualice la lista/hash de caché correspondiente y pruebe las rutas de primera carga y carga en caché por separado.
 
-## Troubleshooting
+## Resolución de problemas
 
-### The wrong page or an old version is loading
+### Se carga la página incorrecta o una versión antigua
 
-Clear the PS4 browser's site data for the host, close and reopen the browser, then start from the root selector. Confirm that the selected branch's cache file contains the current relative asset paths.
+Borre los datos del sitio del navegador de PS4 para el host, cierre y vuelva a abrir el navegador, luego comience desde el selector raíz. Confirme que el archivo de caché de la rama seleccionada contenga las rutas de recursos relativas actuales.
 
-### The cache never finishes
+### La caché nunca termina
 
-Make sure the repository is served over HTTP/HTTPS, the manifest has the correct MIME/configuration on the server, and every listed file is reachable at the exact relative path. A stale AppCache can survive normal refreshes; clear site data before retrying.
+Asegúrese de que el repositorio se sirva a través de HTTP/HTTPS, el manifiesto tenga la configuración MIME correcta en el servidor, y cada archivo listado sea accesible en la ruta relativa exacta. Una AppCache obsoleta puede sobrevivir a las actualizaciones normales; borre los datos del sitio antes de volver a intentarlo.
 
-### The exploit does not complete
+### El exploit no se completa
 
-Verify the console firmware and selected branch, close unrelated browser tabs, and retry from a clean browser state. On the CSSFontFace page the auto-start runs by itself after the cache settles; after any failure fully close and reopen the browser (and reboot the console if it repeats) instead of re-running the chain over a dirty state. Exploit reliability can vary with browser memory, cached state, and console conditions.
+Verifique el firmware de la consola y la rama seleccionada, cierre las pestañas del navegador no relacionadas y vuelva a intentarlo desde un estado de navegador limpio. En la página CSSFontFace, el inicio automático se ejecuta por sí solo después de que la caché se asienta; después de cualquier falla, cierre y vuelva a abrir completamente el navegador (y reinicie la consola si se repite) en lugar de volver a ejecutar la cadena sobre un estado sucio. La fiabilidad del exploit puede variar según la memoria del navegador, el estado de la caché y las condiciones de la consola.
 
-### Out of memory during the exploit ("not enough RAM")
+### Memoria agotada durante el exploit ("not enough RAM")
 
-The CSSFontFace chain only wins when its heap spray lands well — this is a heap lottery, not a UI bug, and several failed attempts in a row are normal variance. To maximize the success rate:
+La cadena CSSFontFace solo tiene éxito cuando su heap spray se asigna correctamente; esto es una lotería de memoria, no un error de interfaz, y varios intentos fallidos seguidos son una variación normal. Para maximizar la tasa de éxito:
 
-1. Install the cache first, then **fully close the PS4 browser** (do not just navigate away).
-2. Reopen the browser, open **only** the host page, and touch nothing while it runs.
-3. Let the auto-start countdown run by itself; do not move the cursor during execution.
-4. After any failure fully close and reopen the browser — a page reload alone does not clear a dirty kernel state.
-5. If one chain keeps failing with out-of-memory on your firmware, try the other chain (`Lapse` vs `NetCtrl`) — their allocation patterns differ.
+1. Instale la caché primero, luego **cierre completamente el navegador de PS4** (no solo navegue a otra página).
+2. Vuelva a abrir el navegador, abra **solo** la página del host y no toque nada mientras se ejecuta.
+3. Deje que la cuenta regresiva de inicio automático se ejecute por sí sola; no mueva el cursor durante la ejecución.
+4. Después de cualquier falla, cierre y vuelva a abrir completamente el navegador; una recarga de página por sí sola no borra un estado sucio del kernel.
+5. Si una cadena sigue fallando con memoria agotada en su firmware, pruebe la otra cadena (`Lapse` vs `NetCtrl`); sus patrones de asignación difieren.
 
-Raising timeouts does not help: out-of-memory happens *during* the spray itself, and the page is only ~10 KB against tens of megabytes of exploit allocations. Do not modify spray sizes or attempt counts — they are researcher-tuned upstream constants.
+Aumentar los tiempos de espera no ayuda: la memoria agotada ocurre *durante* el spray en sí, y la página es de solo ~10 KB frente a decenas de megabytes de asignaciones de exploit. No modifique los tamaños de spray o los conteos de intentos; son constantes upstream ajustadas por investigadores.
 
-### The PS4 browser freezes
+### El navegador de PS4 se congela
 
-JavaScript cannot reliably recover a browser process that has stopped responding. Close and reopen the PS4 browser, then load the matching host again. Avoid adding repeated retry or reload loops; they can increase instability.
+JavaScript no puede recuperar de manera fiable un proceso de navegador que ha dejado de responder. Cierre y vuelva a abrir el navegador de PS4, luego cargue el host correspondiente nuevamente. Evite agregar bucles repetidos de reintentos o recargas; pueden aumentar la inestabilidad.
 
-### A utility payload does not respond
+### Un payload de utilidad no responde
 
-Wait until the host reports that the exploit/GoldHEN flow is ready. Confirm that the selected host actually provides the requested utility, that the PS4 and payload receiver are on the expected network, and that the receiver is listening on the required port. The CSSFontFace branch does not provide standalone utility-payload buttons.
+Espere hasta que el host informe que el flujo de exploit/GoldHEN está listo. Confirme que el host seleccionado realmente proporcione la utilidad solicitada, que la PS4 y el receptor de payload estén en la red esperada, y que el receptor esté escuchando en el puerto requerido. La rama CSSFontFace no proporciona botones de payload de utilidad independientes.
 
-## Safety and limitations
+## Seguridad y limitaciones
 
-- Use only the host intended for the console's exact firmware.
-- Do not interrupt the console while an exploit, GoldHEN load, payload, or system operation is running.
-- Keep a safe recovery path and current backups before using backup, restore, or system-related utilities.
-- Do not use exploit pages for PSN access or other online services.
-- Do not assume that a payload is harmless simply because it is bundled locally; review what each utility does before loading it.
-- The CSSFontFace flow is especially sensitive to available browser memory; excluding optional utility payloads is an intentional stability trade-off.
-- The 11.00–12.02 / 12.50–13.00 branch is a research route with no guarantee of stability; 12.03–12.49 have no working bug upstream.
-- No host can guarantee identical results on every console, browser build, cache state, or network configuration.
+- Utilice solo el host diseñado para el firmware exacto de la consola.
+- No interrumpa la consola mientras se ejecuta un exploit, carga de GoldHEN, payload u operación del sistema.
+- Mantenga una ruta de recuperación segura y copias de seguridad actuales antes de usar utilidades relacionadas con copias de seguridad, restauración o el sistema.
+- No utilice páginas de exploit para acceso a PSN u otros servicios en línea.
+- No asuma que un payload es inofensivo simplemente porque está incluido localmente; revise lo que hace cada utilidad antes de cargarla.
+- El flujo CSSFontFace es especialmente sensible a la memoria disponible del navegador; excluir payloads de utilidad opcionales es una compensación de estabilidad intencional.
+- La rama 11.00–12.02 / 12.50–13.00 es una ruta de investigación sin garantía de estabilidad; 12.03–12.49 no tienen un error funcional upstream.
+- Ningún host puede garantizar resultados idénticos en cada consola, compilación de navegador, estado de caché o configuración de red.
 
-## Credits and attribution
+## Créditos y atribución
 
 ```text
 $ whoami
 
-Author ............. BlackArch
-Community .......... PlayStation Pulse (Telegram)
-Game servers ....... NodePlay
+Autor ............. BlackArch
+Comunidad .......... PlayStation Pulse (Telegram)
+Servidores de juegos ....... NodePlay
 ```
 
-**Author:** [BlackArch](https://t.me/sudoBlackArch)<br>
-**Community:** [PlayStation Pulse](https://t.me/PlayStation_Pulse)<br>
-**Premium Game Servers:** [NodePlay](https://nodeplay.net/)
+**Autor:** [BlackArch](https://t.me/sudoBlackArch)<br>
+**Comunidad:** [PlayStation Pulse](https://t.me/PlayStation_Pulse)<br>
+**Servidores de Juegos Premium:** [NodePlay](https://nodeplay.net/)
 
-> For any use of the materials or files, the links to the author [BlackArch](https://t.me/sudoBlackArch) and the [PlayStation Pulse](https://t.me/PlayStation_Pulse) Telegram group must remain on all pages.
+> Para cualquier uso de los materiales o archivos, los enlaces al autor [BlackArch](https://t.me/sudoBlackArch) y al grupo de Telegram [PlayStation Pulse](https://t.me/PlayStation_Pulse) deben permanecer en todas las páginas.
 
 ---
 
 ```text
 $ exit
 
-PSPULSE // offline ps4 host collection
+PSPULSE // colección de hosts para ps4 sin conexión
 ```
 
-## Offline cache update
+## Actualización de caché sin conexión
 
-Previous-build pages now load the existing goldhen10.bin rather than the absent goldhen5.bin. Its Git blob matches css/stable/src/payload.bin. The project owner confirms: goldhen10.bin is b18.10, goldhen.bin is b18.12, css/stable/src/payload.bin is b18.10, and css/latest/src/payload.bin is b18.12. Git blob identities independently confirm these copies are identical within each build. Device compatibility still requires hardware testing. No binaries were modified.
+Las páginas de compilación anterior ahora cargan el goldhen10.bin existente en lugar del ausente goldhen5.bin. Su blob de Git coincide con css/stable/src/payload.bin. El propietario del proyecto confirma: goldhen10.bin es b18.10, goldhen.bin es b18.12, css/stable/src/payload.bin es b18.10, y css/latest/src/payload.bin es b18.12. Las identidades de blob de Git confirman de manera independiente que estas copias son idénticas dentro de cada compilación. La compatibilidad del dispositivo aún requiere pruebas de hardware. No se modificaron binarios.
 
-Cache the menu online, then install each required host/version cache online. Test menu navigation and host loading with networking disabled. A cached menu does not install every host cache.
+Almacene en caché el menú en línea, luego instale cada caché de host/versión requerida en línea. Pruebe la navegación del menú y la carga del host con la red deshabilitada. Un menú en caché no instala cada caché de host.
 
-### Payload naming
+### Nomenclatura de payloads
 
-| Path | GoldHEN build |
+| Ruta | Compilación GoldHEN |
 | --- | --- |
 | `*/goldhen.bin` | b18.12 |
 | `*/goldhen10.bin` | b18.10 |
 | `css/latest/src/payload.bin` | b18.12 |
 | `css/stable/src/payload.bin` | b18.10 |
-| `1300/payload.bin` | b18.12 (identical Git blob to latest) |
+| `1300/payload.bin` | b18.12 (blob de Git idéntico a latest) |
 
-The suffix `5` in historical filenames (`cache5.html`, `index5.html`, `loader5.js`, `PSPulse5.*`) identifies the previous-build route, now b18.10; it is not a b18.5 version label. Legacy selector input `v2.4b18.5` is normalized to `v2.4b18.10` before storage and navigation. Historical PS4-HEN annotations in firmware diagnostic notes do not determine which binary is loaded; current `1352/goldhen.bin` matches b18.12.
+El sufijo `5` en los nombres de archivos históricos (`cache5.html`, `index5.html`, `loader5.js`, `PSPulse5.*`) identifica la ruta de compilación anterior, ahora b18.10; no es una etiqueta de versión b18.5. La entrada legacy del selector `v2.4b18.5` se normaliza a `v2.4b18.10` antes del almacenamiento y la navegación. Las anotaciones históricas de PS4-HEN en las notas de diagnóstico de firmware no determinan qué binario se carga; el actual `1352/goldhen.bin` coincide con b18.12.
